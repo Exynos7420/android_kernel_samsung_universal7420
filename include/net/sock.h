@@ -385,7 +385,9 @@ struct sock {
 	gfp_t			sk_allocation;
 #ifndef CONFIG_MPTCP
 	u32			sk_pacing_rate; /* bytes per second */
+	u32			sk_max_pacing_rate;
 #endif
+	
 	netdev_features_t	sk_route_caps;
 	netdev_features_t	sk_route_nocaps;
 	int			sk_gso_type;
