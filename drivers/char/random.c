@@ -258,6 +258,8 @@
 #include <linux/kmemcheck.h>
 #include <linux/workqueue.h>
 #include <linux/freezer.h>
+#include <linux/syscalls.h>
+#include <linux/completion.h>
 
 #ifdef CONFIG_GENERIC_HARDIRQS
 # include <linux/irq.h>
@@ -614,10 +616,11 @@ retry:
 		goto retry;
 
 	r->entropy_total += nbits;
-	if (!r->initialized && nbits > 0) {
-		if (r->entropy_total > 128) {
-			r->initialized = 1;
-			r->entropy_total = 0;
+	if (!r->initialized && r->entropy_total > 128) {
+		r->initialized = 1;
+		r->entropy_total = 0;
+		if (r == &nonblocking_pool) {
+			wake_up_interruptible(&urandom_init_wait);
 		}
 	}
 
@@ -1223,7 +1226,7 @@ void rand_initialize_disk(struct gendisk *disk)
 #endif
 
 static ssize_t
-_random_read(int nonblock, char __user *buf, size_t nbytes)
+_random_read(unsigned int flags, char __user *buf, size_t nbytes)
 {
 	ssize_t n;
 
@@ -1242,7 +1245,7 @@ _random_read(int nonblock, char __user *buf, size_t nbytes)
 			return n;
 		/* Pool is (near) empty.  Maybe wait and retry. */
 
-		if (nonblock)
+		if (flags & O_NONBLOCK)
 			return -EAGAIN;
 
 		wait_event_interruptible(random_read_wait,
