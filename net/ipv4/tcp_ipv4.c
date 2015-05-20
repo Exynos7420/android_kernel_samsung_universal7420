@@ -2334,6 +2334,7 @@ process:
 		meta_sk = mptcp_meta_sk(sk);
 
 		bh_lock_sock_nested(meta_sk);
+		tcp_sk(sk)->segs_in += max_t(u16, 1, skb_shinfo(skb)->gso_segs);
 		if (sock_owned_by_user(meta_sk))
 			skb->sk = sk;
 	} else {
