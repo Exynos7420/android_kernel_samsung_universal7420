@@ -138,7 +138,7 @@ void panic(const char *fmt, ...)
 #if defined(CONFIG_SOC_EXYNOS5422) || defined(CONFIG_SOC_EXYNOS5430)
 	show_exynos_cmu();
 #endif
-#if CONFIG_SCHED_DEBUG
+#ifdef CONFIG_SCHED_DEBUG
 	sysrq_sched_debug_show();
 #endif
 
