@@ -33,6 +33,7 @@ enum {
 	Opt_userid,
 	Opt_reserved_mb,
 	Opt_gid_derivation,
+	Opt_nocache,
 	Opt_err,
 };
 
@@ -46,6 +47,7 @@ static const match_table_t sdcardfs_tokens = {
 	{Opt_multiuser, "multiuser"},
 	{Opt_gid_derivation, "derive_gid"},
 	{Opt_reserved_mb, "reserved_mb=%u"},
+	{Opt_nocache, "nocache"},
 	{Opt_err, NULL}
 };
 
@@ -72,6 +74,7 @@ static int parse_options(struct super_block *sb, char *options, int silent,
 #else
 	opts->gid_derivation = true;
 #endif
+	opts->nocache = false;
 
 	*debug = 0;
 
@@ -125,6 +128,9 @@ static int parse_options(struct super_block *sb, char *options, int silent,
 			break;
 		case Opt_gid_derivation:
 			opts->gid_derivation = true;
+			break;
+		case Opt_nocache:
+			opts->nocache = true;
 			break;
 		/* unknown option */
 		default:
