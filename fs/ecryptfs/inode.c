@@ -44,7 +44,6 @@
 #if (ANDROID_VERSION < 80000)
 #include "../sdcardfs/sdcardfs.h"
 #endif
-#endif
 
 #ifdef CONFIG_DLP
 #include "ecryptfs_dlp.h"
