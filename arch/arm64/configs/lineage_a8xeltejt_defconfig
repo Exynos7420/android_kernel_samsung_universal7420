@@ -428,7 +428,9 @@ CONFIG_SECCOMP=y
 # Boot options
 #
 CONFIG_CMDLINE=""
-# CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE is not set
+CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE=y
+CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE_NAMES="exynos7420-a8xelte_mea_jt_00 exynos7420-a8xelte_mea_jt_01 exynos7420-a8xelte_mea_jt_02 exynos7420-a8xelte_mea_jt_03"
+CONFIG_ARM64_APPENDED_DTB=y
 
 #
 # Userspace binary formats
