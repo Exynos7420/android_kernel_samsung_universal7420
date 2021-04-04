@@ -22,7 +22,6 @@
  * Use the current timer as a cycle counter since this is what we use for
  * the delay loop.
  */
-extern u64 (*arch_counter_get_cntvct)(void);
 
 #define get_cycles()	arch_counter_get_cntvct()
 

@@ -2263,7 +2263,6 @@ void console_unlock(void)
 	/* flush buffered message fragment immediately to console */
 	console_cont_flush(text, sizeof(text));
 again:
-	next_seq_in_this_turn = log_next_seq;
 	for (;;) {
 		struct log *msg;
 		size_t len;
@@ -2282,7 +2281,7 @@ again:
 			console_prev = 0;
 		}
 skip:
-		if (console_seq >= next_seq_in_this_turn)
+		if (console_seq >= log_next_seq)
 			break;
 
 		msg = log_from_idx(console_idx);

@@ -44,6 +44,7 @@
 #if (ANDROID_VERSION < 80000)
 #include "../sdcardfs/sdcardfs.h"
 #endif
+#endif
 
 #ifdef CONFIG_DLP
 #include "ecryptfs_dlp.h"
@@ -1680,3 +1681,4 @@ const struct inode_operations ecryptfs_main_iops = {
 	.listxattr = ecryptfs_listxattr,
 	.removexattr = ecryptfs_removexattr
 };
+

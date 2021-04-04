@@ -777,6 +777,7 @@ out:
 #elif defined(SELINUX_ALWAYS_PERMISSIVE)
 	selinux_enforcing = 0;
 #endif
+
 	if (!selinux_enforcing)
 		return 0;
 	return -EPERM;
@@ -1541,6 +1542,7 @@ out:
 #elif defined(SELINUX_ALWAYS_PERMISSIVE)
 	selinux_enforcing = 0;
 #endif
+
 	if (!selinux_enforcing)
 		return 0;
 	return -EACCES;
