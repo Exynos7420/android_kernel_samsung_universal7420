@@ -2733,7 +2733,7 @@ static int __init touchkey_init(void)
 	int ret;
 #endif
 	if (variant_edge == IS_EDGE) {
-		return;
+		return 0;
 	}
 	i2c_add_driver(&touchkey_i2c_driver);
 
@@ -2760,3 +2760,4 @@ module_exit(touchkey_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("@@@");
 MODULE_DESCRIPTION("touch keypad");
+
