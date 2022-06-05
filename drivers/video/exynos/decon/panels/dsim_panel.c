@@ -99,8 +99,8 @@ static int dsim_panel_early_probe(struct dsim_device *dsim)
 
 	if (variant_edge == IS_EDGE)
 		panel->ops = dsim_panel_get_priv_ops_edge(dsim);
-	else
-		panel->ops = dsim_panel_get_priv_ops(dsim);
+	/*else
+		panel->ops = dsim_panel_get_priv_ops(dsim);*/
 
 	if (panel->ops->early_probe) {
 		ret = panel->ops->early_probe(dsim);
