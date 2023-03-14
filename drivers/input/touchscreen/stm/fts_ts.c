@@ -72,7 +72,9 @@
 #endif
 #include <linux/input/mt.h>
 #include "fts_ts.h"
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
 #include "../doubletap2wake.h"
+#endif
 
 #ifdef CONFIG_FB
 #include <linux/notifier.h>
@@ -2821,7 +2823,10 @@ static int fb_notifier_callback(struct notifier_block *self,
 			case FB_BLANK_NORMAL:
 			case FB_BLANK_VSYNC_SUSPEND:
 			case FB_BLANK_HSYNC_SUSPEND:
-				if(!dt2w_enabled){
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+				if(!dt2w_enabled)
+#endif
+				{
 					fts_input_close(tc_data->input_dev);   
 				} 
 				break;
