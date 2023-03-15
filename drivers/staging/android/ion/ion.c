@@ -253,7 +253,9 @@ static void ion_buffer_set_task_info(struct ion_buffer *buffer)
 {
 	INIT_LIST_HEAD(&buffer->master_list);
 	get_task_comm(buffer->task_comm, current->group_leader);
+#ifdef CONFIG_ION_EXYNOS_STAT_LOG
 	get_task_comm(buffer->thread_comm, current);
+#endif
 	buffer->pid = task_pid_nr(current->group_leader);
 	buffer->tid = task_pid_nr(current);
 }
@@ -1043,6 +1045,18 @@ static int ion_debug_client_show(struct seq_file *s, void *unused)
 	seq_printf(s, "----------------------------------------------"
 			"--------------------------------------------\n");
 
+ #ifdef CONFIG_ION_EXYNOS_STAT_LOG
+	seq_printf(s, "%16.s %4.s %16.s %4.s %10.s %8.s %9.s\n",
+		   "task", "pid", "thread", "tid", "size", "# procs", "flag");
+	seq_printf(s, "----------------------------------------------"
+			"--------------------------------------------\n");
+#else
+	seq_printf(s, "%16.s %4.s %16.s %10.s %8.s %9.s\n",
+		   "task", "pid", "thread", "size", "# procs", "flag");
+	seq_printf(s, "----------------------------------------------"
+			"--------------------------------------------\n");
+#endif
+
 	mutex_lock(&client->lock);
 	for (n = rb_first(&client->handles); n; n = rb_next(n)) {
 		struct ion_handle *handle = rb_entry(n, struct ion_handle,
@@ -1054,10 +1068,16 @@ static int ion_debug_client_show(struct seq_file *s, void *unused)
 			names[id] = buffer->heap->name;
 		sizes[id] += buffer->size;
 		sizes_pss[id] += (buffer->size / buffer->handle_count);
+#ifdef CONFIG_ION_EXYNOS_STAT_LOG
 		seq_printf(s, "%16.s %4u %16.s %4u %10zu %8d %9lx\n",
 			   buffer->task_comm, buffer->pid,
 				buffer->thread_comm, buffer->tid, buffer->size,
 				buffer->handle_count, buffer->flags);
+#else
+		seq_printf(s, "%16.s %4u %10zu %8d %9lx\n",
+			   buffer->task_comm, buffer->pid, buffer->size,
+			   buffer->handle_count, buffer->flags);
+#endif
 	}
 	mutex_unlock(&client->lock);
 	up_read(&g_idev->lock);
