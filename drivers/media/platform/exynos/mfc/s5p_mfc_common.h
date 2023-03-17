@@ -37,7 +37,7 @@
 #include <linux/pm_qos.h>
 #endif
 
-#define MFC_DRIVER_INFO		180315
+#define MFC_DRIVER_INFO		161116
 
 #define MFC_MAX_BUFFERS		32
 #define MFC_MAX_REF_BUFS	2
@@ -51,7 +51,7 @@
 /* Interrupt timeout */
 #define MFC_INT_TIMEOUT		15000
 /* Interrupt short timeout */
-#define MFC_INT_SHORT_TIMEOUT	3000
+#define MFC_INT_SHORT_TIMEOUT	800
 /* Busy wait timeout */
 #define MFC_BW_TIMEOUT		500
 /* Watchdog interval */
